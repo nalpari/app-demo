@@ -10,14 +10,22 @@ before writing any code. Heed deprecation notices.
 
 ## Commands
 
+This repo uses **bun** (pinned via `packageManager`, lockfile `bun.lock`). Never run
+`npm install` here — it would regenerate a `package-lock.json` alongside `bun.lock`.
+
 ```bash
-npm run dev     # dev server on :3000 (Turbopack is the default bundler; --webpack to opt out)
-npm run build
-npm run start   # serve the production build
-npm run lint    # eslint (flat config)
+bun install
+bun dev        # dev server on :3000 (Turbopack is the default bundler; --webpack to opt out)
+bun run build  # note: `bun build` is bun's own bundler, not this script
+bun start      # serve the production build
+bun lint       # eslint (flat config)
 ```
 
 No test runner is configured.
+
+bun blocks dependency lifecycle scripts unless the package is in its default-trusted list or
+in `trustedDependencies` in `package.json` (currently `unrs-resolver`). If an install prints
+"Blocked N postinstall", run `bun pm untrusted` to see what, then `bun pm trust <pkg>`.
 
 ## Architecture
 
